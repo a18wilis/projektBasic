@@ -165,8 +165,9 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject william = williamArr.getJSONObject(i);
                     Log.d("brom",  william.getString("name"));
                     Log.d("brom",  william.getString("location"));
+                    Log.d("brom",  william.getString("cost"));
 
-                    MyClass myClass = new MyClass(william.getString("name"),william.getString("location")); //Skapar nytt berg med datan som hämtas från länken
+                    MyClass myClass = new MyClass(william.getString("name"),william.getString("location"), william.getString("cost")); //Lägger in förardata i MyClass.
                     Log.d("brom",  myClass.toString());
                     adapter.add(myClass); //Det nya berget läggs till i adaptern
                 }
