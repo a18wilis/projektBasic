@@ -1,6 +1,7 @@
 package com.example.projektbasic;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     public String array1;
     public String array2;
-
+    public static final String EXTRA_MESSAGE =" ";
     private ArrayList<String> listData;
     private ArrayAdapter<MyClass> adapter;
 
@@ -44,18 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
         new FetchData().execute();
 
-        //Skapar en arrayadapter för bergdatan
         adapter = new ArrayAdapter<MyClass>(this,R.layout.list_item_textview,R.id.list_item_textview);
-        ListView my_listview=(ListView)findViewById(R.id.my_listview);
+        final ListView my_listview=(ListView)findViewById(R.id.my_listview);
         my_listview.setAdapter(adapter);
 
-        //Om man klickar på ett berg i listan så dyker en toast innehållande information om det berger upp på skärmen
         my_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-
-                //Hämtar informationen som skapas i Mountain-klasses och visar den som en toast
-                Toast.makeText(getApplicationContext(), adapter.getItem(position).info(), Toast.LENGTH_SHORT).show();
+                String info = adapter.getItem(position).info();
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, info);
+                startActivity(intent);
             }
         });
 
@@ -79,8 +79,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id= item.getItemId();
         if (id == R.id.action_settings){
-            adapter.clear(); //Rensar listviewen
-            new FetchData().execute(); //Refreshar listviewen
+
+            String info = "F1 2019 Drivers List is an application for people interested in knowing simple facts about the drivers of the F1 2019 World Championship.";
+            Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+            intent.putExtra(EXTRA_MESSAGE, info);
+            startActivity(intent);
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -99,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 // Construct the URL for the Internet service
-                URL url = new URL("http://wwwlab.iit.his.se/brom/kurser/mobilprog/dbservice/admin/getdataasjson.php?type=brom");
+                URL url = new URL("http://wwwlab.iit.his.se/a18wilis/JSON-filer/drivers.json?type=brom");
 
                 // Create the request to the PHP-service, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -161,9 +165,8 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject william = williamArr.getJSONObject(i);
                     Log.d("brom",  william.getString("name"));
                     Log.d("brom",  william.getString("location"));
-                    Log.d("brom",  ""+william.getInt("size"));
 
-                    MyClass myClass = new MyClass(william.getString("array1"),william.getString("array2")); //Skapar nytt berg med datan som hämtas från länken
+                    MyClass myClass = new MyClass(william.getString("name"),william.getString("location")); //Skapar nytt berg med datan som hämtas från länken
                     Log.d("brom",  myClass.toString());
                     adapter.add(myClass); //Det nya berget läggs till i adaptern
                 }

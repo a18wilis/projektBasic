@@ -1,28 +1,28 @@
 package com.example.projektbasic;
 
 public class MyClass {
-    private String array1;
-    private String array2;
+    private String name;
+    private String origin;
 
     public MyClass(){
-        array1="Array 1 not specified";
-        array2="Array 2 not specified";
+        name="Array 1 not specified";
+        origin="Array 2 not specified";
 
     }
 
     public MyClass(String a1, String a2){
-        array1 = a1;
-        array2 = a2;
+        name = a1;
+        origin = a2;
     }
 
     public String info(){
         String tmp=new String();
-        tmp+=array1+" + " +array2;
+        tmp+=name+" is a driver from " +origin;
         return tmp;
     }
 
     @Override
     public String toString() {
-        return array1;
+        return name;
     }
 }
