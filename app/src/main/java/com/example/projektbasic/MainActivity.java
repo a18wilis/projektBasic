@@ -4,8 +4,7 @@ package com.example.projektbasic;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.AsyncTask;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +30,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     public String array1;
     public String array2;
-    public static final String EXTRA_MESSAGE =" ";
+    public static String INFO =" ";
+    public static String FACT=" ";
     private ArrayList<String> listData;
     private ArrayAdapter<MyClass> adapter;
 
@@ -53,20 +52,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 String info = adapter.getItem(position).info();
+                String fact = adapter.getItem(position).fact();
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-                intent.putExtra(EXTRA_MESSAGE, info);
+                intent.putExtra(INFO, info);
+                intent.putExtra(FACT, fact);
                 startActivity(intent);
             }
         });
 
-       FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
     }
 
     @Override
@@ -82,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
             String info = "F1 2019 Drivers List is an application for people interested in knowing simple facts about the drivers of the F1 2019 World Championship.";
             Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-            intent.putExtra(EXTRA_MESSAGE, info);
+            intent.putExtra(INFO, info);
             startActivity(intent);
 
             return true;
@@ -159,15 +153,16 @@ public class MainActivity extends AppCompatActivity {
             // the un-parsed JSON string or is null if we had an IOException during the fetch.
             try {
 
-                JSONArray williamArr= new JSONArray(o);
-                for(int i=0; i < williamArr.length(); i++) {
-                    Log.d("brom", "element 0:" + williamArr.get(i).toString());
-                    JSONObject william = williamArr.getJSONObject(i);
-                    Log.d("brom",  william.getString("name"));
-                    Log.d("brom",  william.getString("location"));
-                    Log.d("brom",  william.getString("cost"));
+                JSONArray drivers= new JSONArray(o);
+                for(int i=0; i < drivers.length(); i++) {
+                    Log.d("brom", "element 0:" + drivers.get(i).toString());
+                    JSONObject driverInfo= drivers.getJSONObject(i);
+                    Log.d("brom",  driverInfo.getString("name"));
+                    Log.d("brom",  driverInfo.getString("location"));
+                    Log.d("brom",  driverInfo.getString("cost"));
+                    Log.d("brom",  driverInfo.getString("auxdata"));
 
-                    MyClass myClass = new MyClass(william.getString("name"),william.getString("location"), william.getString("cost")); //Lägger in förardata i MyClass.
+                    MyClass myClass = new MyClass(driverInfo.getString("name"),driverInfo.getString("location"), driverInfo.getString("cost"), driverInfo.getString("auxdata")); //Lägger in förardata i MyClass.
                     Log.d("brom",  myClass.toString());
                     adapter.add(myClass); //Det nya berget läggs till i adaptern
                 }
