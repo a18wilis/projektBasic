@@ -14,7 +14,7 @@ public class AboutActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.drawable.action_icon);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-        //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();

@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">\t F1 2019 Drivers List</string>
-    <string name="action_settings">About us</string>
-    <string name="action_refresh">Refresh</string>
+    <string name="action_settings">About</string>
 </resources>

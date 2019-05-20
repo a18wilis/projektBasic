@@ -11,6 +11,7 @@
     android:height="185dp"
     android:width="500dp"
     android:textAlignment="center"
+    android:textColor="#000000"
     android:id="@+id/list_item_textview">
 </TextView>
 
