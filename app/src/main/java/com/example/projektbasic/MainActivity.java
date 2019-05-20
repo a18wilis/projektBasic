@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings){
 
             String info = "F1 2019 Drivers List is an application for people interested in knowing simple facts about the drivers of the F1 2019 World Championship.";
-            Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+            Intent intent = new Intent(MainActivity.this, AboutActivity.class);
             intent.putExtra(INFO, info);
             startActivity(intent);
 
