@@ -25,14 +25,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    public String array1;
-    public String array2;
-    public static String INFO =" ";
-    public static String FACT=" ";
-    private ArrayList<String> listData;
+
+    public static String info;
     private ArrayAdapter<MyClass> adapter;
 
     @Override
@@ -41,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.action_icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         new FetchData().execute();
 
@@ -51,16 +50,16 @@ public class MainActivity extends AppCompatActivity {
         my_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String info = adapter.getItem(position).info();
-                String fact = adapter.getItem(position).fact();
+
+                Bundle b = new Bundle();
+                b.putString("info", adapter.getItem(position).info());
+                b.putString("fact", adapter.getItem(position).fact());
+
                 Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
-                intent.putExtra(INFO, info);
-                intent.putExtra(FACT, fact);
+                intent.putExtras(b);
                 startActivity(intent);
             }
         });
-
-
     }
 
     @Override
@@ -73,17 +72,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id= item.getItemId();
         if (id == R.id.action_settings){
-
-            String info = "F1 2019 Drivers List is an application for people interested in knowing simple facts about the drivers of the F1 2019 World Championship.";
+            String about = "F1 2019 Drivers List is an application for people interested in knowing simple facts about the drivers of the F1 2019 World Championship.";
             Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-            intent.putExtra(INFO, info);
+            intent.putExtra(info, about);
             startActivity(intent);
-
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
     private class FetchData extends AsyncTask<Void,Void,String>{
         @Override
         protected String doInBackground(Void... params) {

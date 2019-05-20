@@ -19,9 +19,9 @@
         android:layout_margin="30dp"
         android:fontFamily="sans-serif-light"
         android:textAlignment="center"
-        android:background="#e0e0e0"
+        android:background="?attr/colorPrimary"
         android:elevation="15dp"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:id="@+id/textFromMain">
     </TextView>
 </LinearLayout>

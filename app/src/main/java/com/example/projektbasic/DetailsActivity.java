@@ -17,25 +17,27 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.action_icon);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
-        // Get the Intent that started this activity and extract the string
+        // Get the Intent that started this activity and extract the strings
         Intent intent = getIntent();
-
-        final String info = intent.getStringExtra(MainActivity.INFO);
-        final String fact = intent.getStringExtra(MainActivity.INFO);
+        Bundle b = intent.getExtras();
+        String info = b.getString("info");
+        final String fact = b.getString("fact");
 
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.textFromMain);
         textView.setText(info);
 
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Snackbar.make(view, "asdsad", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, fact, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
             }
         });
     }
